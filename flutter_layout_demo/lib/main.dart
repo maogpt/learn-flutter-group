@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Flutter layout demo'),
         ),
-        body: Column(children: [
+        body: ListView(children: [
           Image.asset(
             'images/lake.jpg',
             width: 600,
