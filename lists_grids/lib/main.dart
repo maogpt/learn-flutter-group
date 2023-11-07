@@ -14,7 +14,11 @@ import 'package:flutter/material.dart';
 // }
 
 void main() {
-  runApp(const SpacedItemList());
+  runApp(
+    LongList(
+      items: List<String>.generate(10000, (index) => 'Item $index'),
+    ),
+  );
 }
 
 class GridListApp extends StatelessWidget {
@@ -254,6 +258,35 @@ class ItemWidget extends StatelessWidget {
         height: 100,
         child: Center(
           child: Text(text),
+        ),
+      ),
+    );
+  }
+}
+
+class LongList extends StatelessWidget {
+  final List<String> items;
+
+  const LongList({super.key, required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    const title = 'Long List';
+
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(title),
+        ),
+        body: ListView.builder(
+          itemCount: items.length,
+          prototypeItem: ListTile(title: Text(items.first)),
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(items[index]),
+            );
+          },
         ),
       ),
     );
