@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
+// void main() {
+//   runApp(
+//     ListItemApp(
+//       items: List<ListItem>.generate(
+//         1000,
+//         (index) => index % 6 == 0
+//             ? HeadingItem('Heading $index')
+//             : MessageItem('Sender $index', 'Message body $index'),
+//       ),
+//     ),
+//   );
+// }
+
 void main() {
-  runApp(
-    ListItemApp(
-      items: List<ListItem>.generate(
-        1000,
-        (index) => index % 6 == 0
-            ? HeadingItem('Heading $index')
-            : MessageItem('Sender $index', 'Message body $index'),
-      ),
-    ),
-  );
+  runApp(const SpacedItemList());
 }
 
 class GridListApp extends StatelessWidget {
@@ -196,4 +200,62 @@ class MessageItem implements ListItem {
 
   @override
   Widget buildSubtitle(BuildContext context) => Text(body);
+}
+
+class SpacedItemList extends StatelessWidget {
+  const SpacedItemList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const items = 4;
+
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        cardTheme: CardTheme(color: Colors.blue.shade50),
+        useMaterial3: true,
+      ),
+      home: Scaffold(
+        body: LayoutBuilder(
+          builder: (context, constrains) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constrains.maxHeight),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    items,
+                    (index) => ItemWidget(text: 'Item $index'),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class ItemWidget extends StatelessWidget {
+  const ItemWidget({
+    super.key,
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: SizedBox(
+        height: 100,
+        child: Center(
+          child: Text(text),
+        ),
+      ),
+    );
+  }
 }
